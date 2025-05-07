@@ -19,6 +19,11 @@ function addr_of(target_object) {
     return Int64.from_double(hax_array[6]);
 }
 
+function obj_at_addr(target_address){
+	hax_array[6] = target_address.to_double();
+	return target_array[0];
+}
+
 let o = {};
 print(describe(o))
 // Object: 0x7feeaf0b8080 with butterfly...
