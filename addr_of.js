@@ -15,11 +15,13 @@ target_array[1] = [];
  */
 
 function addr_of(target_object) {
+    // returns Int64
     target_array[0] = target_object;
     return Int64.from_double(hax_array[6]);
 }
 
 function obj_at_addr(target_address){
+	// target_address has to be Int64
 	hax_array[6] = target_address.to_double();
 	return target_array[0];
 }
