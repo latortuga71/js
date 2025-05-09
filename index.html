@@ -1,0 +1,63 @@
+<html>
+    <body>
+        <h1>WebGL2 Test</h1>
+        <canvas id="c" width="150" height="150">
+        </canvas>
+        <canvas width="800" height="600"></canvas>
+<script>
+    let canvas = document.getElementById("c");
+    let gl = canvas.getContext("webgl");
+    let vert = gl.createShader(gl.VERTEX_SHADER);
+    let frag = gl.createShader(gl.FRAGMENT_SHADER);
+    let prog = gl.createProgram();
+    let index_buf = gl.createBuffer();
+
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buf);
+
+    gl.bufferData(
+        gl.ELEMENT_ARRAY_BUFFER, new Uint8Array([255]), gl.STATIC_DRAW
+    );
+
+    gl.shaderSource(vert, `#version 300 es
+        void main()
+        {
+            gl_Position = vec4(0,0,0,1);
+            gl_PointSize = 64.0;
+        }
+    `);
+
+    gl.shaderSource(frag, `#version 300 es
+        precision highp float;
+        out vec4 color;
+        void main()
+        {
+            color = vec4(1,0,0,1);
+        }
+    `);
+
+    gl.compileShader(vert);
+    gl.compileShader(frag);
+    gl.attachShader(prog, vert);
+    gl.attachShader(prog, frag);
+    gl.linkProgram(prog);
+    gl.clearColor(0, 0, 0, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buf);
+    gl.drawElements(gl.POINTS, 1, gl.UNSIGNED_BYTE, 0);
+
+    </script>
+        <!--<script>
+            const canvas = document.getElementById("c");
+            const gl2 = canvas.getContext("webgl2");
+            if (!gl2){
+                console.log("Failed to get webgl2 ctx");
+            }
+            console.log("webgl2 ctx ready");
+            gl2.enable(0x8D69);
+            gl2.disable(0x8D69);
+
+        </script>
+        -->
+    </body>
+</html>
